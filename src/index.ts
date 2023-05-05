@@ -4,7 +4,7 @@ import { StringUtilities } from './stringUtilities'
 import { zh_CN } from './locales/zh_CN'
 
 // eslint-disabled-next-line
-cronstrue.locales.zh_CN = new zh_CN()
+
 class NewCronstrue extends cronstrue {
   constructor(expression: string, options: Options) {
     super(expression, options)
@@ -292,6 +292,7 @@ class NewCronstrue extends cronstrue {
     return description
   }
 }
+NewCronstrue.locales.zh_CN = new zh_CN()
 export function cron2chinese(cron: string) {
   const s = NewCronstrue.toString(cron, { locale: 'zh_CN' })
   return s
