@@ -2,6 +2,7 @@
   "extends": "@antfu",
   "rules": {
     "eqeqeq": "warn",
-    "new-cap": "warn"
+    "new-cap": "warn",
+    "no-mixed-operators": "warn"
   }
 }

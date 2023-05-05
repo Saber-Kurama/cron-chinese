@@ -15,7 +15,7 @@ class NewCronstrue extends cronstrue {
     {
       throwExceptionOnParseError = true,
       verbose = false,
-      dayOfWeekStartIndexZero = true,
+      dayOfWeekStartIndexZero = false,
       monthStartIndexZero = false,
       use24HourTimeFormat,
       locale = null,
@@ -94,8 +94,8 @@ class NewCronstrue extends cronstrue {
     else if (
       !secondsExpression
       && minuteExpression.includes('-')
-      && !(minuteExpression.includes(','))
-      && !(minuteExpression.includes('/'))
+      && !minuteExpression.includes(',')
+      && !minuteExpression.includes('/')
       && !StringUtilities.containsAny(
         hourExpression,
         NewCronstrue.specialCharacters,
@@ -182,6 +182,50 @@ class NewCronstrue extends cronstrue {
     }
 
     return description
+  }
+
+  protected formatTime(
+    hourExpression: string,
+    minuteExpression: string,
+    secondExpression: string,
+  ) {
+    let hour: number = parseInt(hourExpression)
+    let period = ''
+    let setPeriodBeforeTime = false
+    if (!this.options.use24HourTimeFormat) {
+      setPeriodBeforeTime = !!(
+        this.i18n.setPeriodBeforeTime && this.i18n.setPeriodBeforeTime()
+      )
+      period = setPeriodBeforeTime
+        ? `${this.getNewPeriod(hour)} `
+        : ` ${this.getNewPeriod(hour)}`
+      if (hour > 12)
+        hour -= 12
+
+      if (hour === 0) {
+        // hour = 12;
+      }
+    }
+
+    const minute = minuteExpression
+    let second = ''
+    if (secondExpression) {
+      second = `:${(`00${secondExpression}`).substring(
+        secondExpression.length,
+      )}`
+    }
+
+    return `${setPeriodBeforeTime ? period : ''}${(
+      `00${hour.toString()}`
+    ).substring(hour.toString().length)}:${(`00${minute.toString()}`).substring(
+      minute.toString().length,
+    )}${second}${!setPeriodBeforeTime ? period : ''}`
+  }
+
+  getNewPeriod(hour: number): string {
+    return hour > 12
+      ? (this.i18n.pm && this.i18n.pm()) || 'PM'
+      : (this.i18n.am && this.i18n.am()) || 'AM'
   }
 
   protected transformVerbosity(description: string, useVerboseFormat: boolean) {
