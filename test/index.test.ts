@@ -3,15 +3,13 @@ import { cron2chinese } from '../src/index'
 
 // import cronstrue from "../src/cronstrue";
 
-// describe("测试基本", () => {
-//   it("exported", () => {
-//     cron2chinese("0 0 0 * * ? *");
-//     expect(1).toEqual(1);
-//   });
-//   it("exported11", () => {
-//     expect(1).toEqual(1);
-//   });
-// });
+describe('测试基本', () => {
+  it('exported', () => {
+    const a = cron2chinese('0 10,44 14,16 ? 3 WED')
+    expect(1).toEqual(1)
+  })
+})
+// const examples: any[] = [];
 const examples = [
   {
     expression: '*/5 * * * * ?',
@@ -96,7 +94,23 @@ const examples = [
   },
   {
     expression: '0 10,44 14 ? 3 WED',
-    text: '三月的星期三的下午 2:10 和 2:44 ',
+    text: '三月份的星期三的在 下午 02:10 和 下午 02:44',
+  },
+  {
+    expression: '11 8,10 11 ? 3 WED',
+    text: '三月份的星期三的在 上午 11:08:11 和 上午 11:10:11',
+  },
+  {
+    expression: '0 30 6,14,16 ? 3 WED',
+    text: '三月份的星期三的在 上午 06:30, 下午 02:30 和 下午 04:30',
+  },
+  {
+    expression: '0 10,44 14,16 ? 3 WED',
+    text: '三月份的星期三的在 下午 02:10, 下午 02:44, 下午 04:10 和 下午 04:44',
+  },
+  {
+    expression: '0 10 14 ? 3 WED',
+    text: '三月份的星期三的下午 02:10',
   },
   {
     expression: '0 15 10 ? * MON-FRI',

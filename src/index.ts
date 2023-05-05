@@ -134,12 +134,58 @@ class NewCronstrue extends cronstrue {
           description += this.i18n.spaceAnd()
       }
     }
+    else if (
+      (secondsExpression.includes(',')
+        || minuteExpression.includes(',')
+        || hourExpression.includes(','))
+      && !StringUtilities.containsAny(secondsExpression, ['/', '-', '*'])
+      && !StringUtilities.containsAny(minuteExpression, ['/', '-', '*'])
+      && !StringUtilities.containsAny(hourExpression, ['/', '-', '*'])
+    ) {
+      // 先不关心 *
+      const secondArr = secondsExpression.split(',').filter(v => v)
+      const minuteArr = minuteExpression.split(',').filter(v => v)
+      const hourArr = hourExpression.split(',').filter(v => v)
+      const dateArr = []
+      // todo: 如何提z
+      for (let x = 0; x < hourArr.length; x++) {
+        if (minuteArr.length > 0) {
+          for (let y = 0; y < minuteArr.length; y++) {
+            if (secondArr.length > 0) {
+              for (let z = 0; z < secondArr.length; z++)
+                dateArr.push([hourArr[x], minuteArr[y], secondArr[z]])
+            }
+            else {
+              dateArr.push([hourArr[x], minuteArr[y], ''])
+            }
+          }
+        }
+        else {
+          dateArr.push([hourArr[x], '', ''])
+        }
+      }
+      description += this.i18n.at()
+
+      for (let i = 0; i < dateArr.length; i++) {
+        description += ' '
+        description += this.formatTime(
+          dateArr[i][0],
+          dateArr[i][1],
+          dateArr[i][2],
+        )
+
+        if (i < dateArr.length - 2)
+          description += ','
+
+        if (i == dateArr.length - 2)
+          description += this.i18n.spaceAnd()
+      }
+    }
     else {
       // default time description
       const secondsDescription = this.getSecondsDescription()
       const minutesDescription = this.getMinutesDescription()
       const hoursDescription = this.getHoursDescription()
-
       // description += secondsDescription;
 
       // if (description && minutesDescription) {
@@ -174,7 +220,7 @@ class NewCronstrue extends cronstrue {
 
       // console.log(
       //   "hoursDescription",
-      //   description,
+      //   // description,
       //   hoursDescription,
       //   minutesDescription,
       //   secondsDescription
@@ -209,15 +255,14 @@ class NewCronstrue extends cronstrue {
 
     const minute = minuteExpression
     let second = ''
-    if (secondExpression) {
-      second = `:${(`00${secondExpression}`).substring(
-        secondExpression.length,
-      )}`
-    }
+    if (secondExpression)
+      second = `:${`00${secondExpression}`.substring(secondExpression.length)}`
 
-    return `${setPeriodBeforeTime ? period : ''}${(
-      `00${hour.toString()}`
-    ).substring(hour.toString().length)}:${(`00${minute.toString()}`).substring(
+    return `${
+      setPeriodBeforeTime ? period : ''
+    }${`00${hour.toString()}`.substring(
+      hour.toString().length,
+    )}:${`00${minute.toString()}`.substring(
       minute.toString().length,
     )}${second}${!setPeriodBeforeTime ? period : ''}`
   }
