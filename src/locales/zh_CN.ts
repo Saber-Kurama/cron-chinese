@@ -46,7 +46,7 @@ export class zh_CN {
   }
 
   atSpace() {
-    return '在'
+    return ''
   }
 
   everyMinuteBetweenX0AndX1() {
@@ -138,7 +138,7 @@ export class zh_CN {
   }
 
   commaOnThe() {
-    return '限每月的'
+    return '每月的'
   }
 
   spaceX0OfTheMonth() {
@@ -178,15 +178,15 @@ export class zh_CN {
   }
 
   commaOnTheLastDayOfTheMonth() {
-    return '限每月的最后一天'
+    return '每月的最后一天'
   }
 
   commaOnTheLastWeekdayOfTheMonth() {
-    return '限每月的最后一个工作日'
+    return '每月的最后一个工作日'
   }
 
   commaDaysBeforeTheLastDayOfTheMonth() {
-    return '限每月最后%s天'
+    return '每月最后%s天'
   }
 
   firstWeekday() {
@@ -198,7 +198,7 @@ export class zh_CN {
   }
 
   commaOnTheX0OfTheMonth() {
-    return '限每月的%s'
+    return '每月的%s'
   }
 
   commaEveryX0Days() {
@@ -206,11 +206,11 @@ export class zh_CN {
   }
 
   commaBetweenDayX0AndX1OfTheMonth() {
-    return '限每月的 %s 至 %s 之间'
+    return '每月的 %s 至 %s 之间'
   }
 
   commaOnDayX0OfTheMonth() {
-    return '限每月%s'
+    return '每月%s'
   }
 
   commaEveryX0Years() {
