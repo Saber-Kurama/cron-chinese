@@ -3,9 +3,10 @@ import type { Options } from 'cronstrue/dist/options'
 import { StringUtilities } from './stringUtilities'
 import { zh_CN } from './locales/zh_CN'
 
-// eslint-disabled-next-line
-
-class NewCronstrue extends cronstrue {
+// todo: 先这样兼容一下
+// @ts-expect-error Jinrong
+const Cronstrue = cronstrue.default ? cronstrue.default : cronstrue
+class NewCronstrue extends Cronstrue {
   constructor(expression: string, options: Options) {
     super(expression, options)
   }
