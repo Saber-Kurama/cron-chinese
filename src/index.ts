@@ -295,7 +295,9 @@ class NewCronstrue extends Cronstrue {
 }
 NewCronstrue.locales.zh_CN = new zh_CN()
 export function cron2chinese(cron: string) {
-  const s = NewCronstrue.toString(cron, { locale: 'zh_CN' })
+  let s = NewCronstrue.toString(cron, { locale: 'zh_CN' })
+  // 去掉多余的
+  s = s.replace(/的的/, '的')
   return s
 }
 
